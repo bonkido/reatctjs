@@ -70,4 +70,54 @@ const SearchFood = async (req, res) => {
     }
 };
 
-export { addFood, listFood, removeFood, DetailFood, SearchFood };
+const categoriesFood = async (req, res) => {
+    try {
+        const foods = await foodModel.find({});
+        const categories = await foodModel.distinct('category');
+        res.json({ success: true, data: foods, categories });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Lỗi kết nối" });
+    }
+};
+// add category
+const addCategory = async (req, res) => {
+    const { name } = req.body;
+    try {
+        // Kiểm tra xem danh mục đã tồn tại chưa
+        const existingCategory = await foodModel.findOne({ category: name });
+        if (existingCategory) {
+            return res.status(400).json({ message: 'Danh mục đã tồn tại' });
+        }
+
+        const newCategory = new foodModel({
+            category: name,
+            name: null,
+            price: null,
+            description: null,
+            image: null,
+            quantity: null
+        });
+
+        await newCategory.save();
+        res.status(201).json({ message: "Danh mục mới được thêm thành công", newCategory });
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+};
+// remove category
+const removeCategory = async (req, res) => {
+    try {
+      const { category } = req.body;
+      const deletedCategory = await foodModel.findOneAndDelete({ category });
+      if (!deletedCategory) {
+        return res.status(404).json({ success: false, message: "Category not found" });
+      }
+      res.json({ success: true, message: "Category removed successfully" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Error connecting to the database" });
+    }
+  };
+
+export { addFood, listFood, removeFood, DetailFood, SearchFood , categoriesFood , addCategory , removeCategory };

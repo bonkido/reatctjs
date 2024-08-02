@@ -1,0 +1,29 @@
+.addCategory{
+    padding: 10px;
+    border: none;
+    background-color: cadetblue;
+    color: white;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+}
+.addCateInput{
+    padding: 7px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+}
+.list-tablee{
+    margin: 10px;
+    width: 300px;
+}
+.list-table-formatm{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    gap: 10px;
+    border: 1px solid gray;
+    padding: 10px;
+}
+.list-table-formatm:hover{
+    background-color: #f1f1f1;
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyễn Hồng Ân - 2251330003</title>
+    <script>
+        var so1 = parseFloat(prompt("Nhập số 1:"));
+        var so2 = parseFloat(prompt("Nhập số 2:"));
+        var pheptinh = prompt("Nhập phép tính :");
+    </script>
+</head>
+<body>
+    <script>
+        switch (pheptinh) {
+            case '+':
+                var kq = so1 + so2;
+                document.write("Kết quả của phép tính là : " + kq);
+                break;
+            default:
+                document.write( pheptinh + "Không phải là phép tính hợp lệ");
+                break;
+        }
+    </script>
+</body>
+</html>

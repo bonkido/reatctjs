@@ -1,10 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import './Add.css'
 import { assets } from '../../assets/assets'
 import axios from "axios";
 import { toast } from 'react-toastify';
 // eslint-disable-next-line react/prop-types
 const Add = ({url}) => {
+  const [list,setList] = useState([]);
+  const fetchList = async () => {
+      const response = await axios.get(`${url}/api/food/categories`)
+  
+      if(response.data.success){
+        setList(response.data.categories);
+      }
+      else{
+        toast.error("Error")
+      }
+    }
+    useEffect(()=>{
+      fetchList()
+    })
   const [image,setImage] = useState(false);
   const [data,setData] = useState({
     name: '',
@@ -63,16 +77,14 @@ const Add = ({url}) => {
         <div className="add-category-price">
           <div className="add-category flex-col">
               <p>Danh mục sản phẩm</p>
-              <select  onChange={onChangeHandler} value={data.category}  name="category" id="">
-                <option value="">Chọn danh mục</option>
-                <option value="Gỏi trộn">Gỏi trộn</option>
-                <option value="Bánh cuốn">Bánh cuốn</option>
-                <option value="Bánh kem">Bánh kem</option>
-                <option value="Bánh mì">Bánh mì</option>
-                <option value="Hamburger">Hamburger</option>
-                <option value="Món chay">Món chay</option>
-                <option value="Mì ống">Mì ống</option>
-              </select>
+                  <select onChange={onChangeHandler} value={data.category} name="category" id="">
+                    <option value="">Chọn danh mục</option>
+                    {list.map((item, index) => (
+                      <option key={index} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </select>
           </div>
           <div className="add-price flex-col">
             <p>Giá sản phẩm</p>
